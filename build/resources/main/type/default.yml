@@ -1,0 +1,24 @@
+#number: |
+#  var this = data.get("this")
+#  var min = this.get("min")
+#  var max = this.get("max")
+#  var format = Pouvoir.configManager.numberFormat
+#  if(this.containsKey("format")){
+#    format = this.get("format")
+#  }
+#  return NumberUtils.random(min,max,format).toString()
+
+#calculation: |
+#  var this = data.get("this")
+#  var formula = this.get("formula")
+#  var format = Pouvoir.configManager.numberFormat
+#  if(this.containsKey("format")){
+#    format = this.get("format")
+#  }
+#  return NumberUtils.format(CalculationUtils.getResult(data.handle(formula)),format).toString()
+
+example-type:
+  key: 'example'
+  script: |
+    var str = "hello"
+    return str

@@ -1,0 +1,21 @@
+品质:
+  type: weight
+  values:
+    - '10::粗糙'
+    - '1::传说'
+test-map:
+  type: map
+  品质: '<品质>()'
+  材质: '<材质>(this::品质)'
+  描述: '<描述>(this::品质)'
+材质:
+  type: map
+  粗糙: WOODEN_SWORD
+  传说: DIAMOND_SWORD
+描述:
+  type: map
+  粗糙:
+    - '啊吧'
+  传说:
+    - '啊吧2'
+

@@ -1,0 +1,19 @@
+options:
+  debug: false
+  check-version: true
+  ignore-nbt-keys:
+    - 'VARIABLES_DATA'
+    - 'HideFlags'
+    - 'Enchantments'
+    - 'display'
+    - 'Damage'
+    - 'AttributeModifiers'
+    - 'ench'
+list:
+  pre-page-size: 10
+  up: '&d&l&m======================================='
+  format: '&a{order} &b -> &6{key} &5- &b{name}'
+  left: '  &b<-'
+  page-info: '      &e{current}&5/&e{total}      '
+  right: '&b->  '
+  down: '&d&l&m======================================='

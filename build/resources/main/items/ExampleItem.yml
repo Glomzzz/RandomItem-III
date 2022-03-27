@@ -1,0 +1,50 @@
+#物品ID
+ExampleItem:
+  #物品展示名 支持调用节点
+  display: '<test-map>(品质)&9村好剑♂'
+  #物品材质 支持调用节点
+  #例子:
+  #material: '<品质.0>_SWORD'
+  #注意这个调用节点的前提是 必须存在这个材质 不然会报错
+  material: '<test-map>(材质)'
+  #物品描述 支持调用节点
+  lore:
+    - '<test-map>(描述)'
+  #0 = false , 非0 = true
+  unbreakable: true
+  item-flags:
+    - 'HIDE_ATTRIBUTES'
+  #物品NBT节点 支持值调用节点
+  #例子:
+  #nbt-keys:
+  #  RPG_SYSTEM_ATTRIBUTE_Physical_Damage_Value: '<强度>*10'
+  nbt: { }
+  #物品附魔节点 支持值调用节点
+  #例子:
+  #enchantments:
+  #  SWEEPING_EDGE: '<Example>'
+  enchantments:
+    SWEEPING_EDGE: 1
+  vars:
+    品质:
+      type: weight
+      values:
+        - '10::粗糙'
+        - '1::传说'
+    test-map:
+      type: map
+      品质: '<品质>()'
+      材质: '<材质>(this::品质)'
+      描述: '<描述>(this::品质)'
+    材质:
+      type: map
+      粗糙: WOODEN_SWORD
+      传说: DIAMOND_SWORD
+    描述:
+      type: map
+      粗糙:
+        - '啊吧'
+      传说:
+        - '啊吧2'
+  global-vars: [ ]
+

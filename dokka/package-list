@@ -1,0 +1,25 @@
+$dokka.format:javadoc-v1
+$dokka.linkExtension:html
+$dokka.location:com.skillw.randomitem.api.data/ProcessData.Companion///PointingToDeclaration/com/skillw/randomitem/api/data/ProcessData.Companion.html
+$dokka.location:com.skillw.randomitem.api.item/RItem.Companion///PointingToDeclaration/com/skillw/randomitem/api/item/RItem.Companion.html
+$dokka.location:com.skillw.randomitem.api.meta/BaseMeta.Companion///PointingToDeclaration/com/skillw/randomitem/api/meta/BaseMeta.Companion.html
+$dokka.location:com.skillw.randomitem.api.meta/MetaData.Companion///PointingToDeclaration/com/skillw/randomitem/api/meta/MetaData.Companion.html
+$dokka.location:com.skillw.randomitem.api.variable.type.script/ScriptVariableType.Companion///PointingToDeclaration/com/skillw/randomitem/api/variable/type/script/ScriptVariableType.Companion.html
+$dokka.location:com.skillw.randomitem.api.variable/Variable.Companion///PointingToDeclaration/com/skillw/randomitem/api/variable/Variable.Companion.html
+$dokka.location:com.skillw.randomitem.api.variable/VariableData.Companion///PointingToDeclaration/com/skillw/randomitem/api/variable/VariableData.Companion.html
+$dokka.location:com.skillw.randomitem.util/FunctionUtils.Type///PointingToDeclaration/com/skillw/randomitem/util/FunctionUtils.Type.html
+com.skillw.randomitem
+com.skillw.randomitem.api.data
+com.skillw.randomitem.api.item
+com.skillw.randomitem.api.manager
+com.skillw.randomitem.api.meta
+com.skillw.randomitem.api.variable
+com.skillw.randomitem.api.variable.type
+com.skillw.randomitem.api.variable.type.script
+com.skillw.randomitem.internal.command
+com.skillw.randomitem.internal.listener
+com.skillw.randomitem.internal.manager
+com.skillw.randomitem.internal.meta
+com.skillw.randomitem.internal.type
+com.skillw.randomitem.util
+

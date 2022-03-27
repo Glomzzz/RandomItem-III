@@ -1,0 +1,52 @@
+prefix: '&d[&9RandomItem&d] '
+
+command-save-item: '&d[&9RandomItem&d] &e保存了 &b{0} &5&lX1 &e至文件 &d{1} &e中!'
+command-get-item: '&d[&9RandomItem&d] &e你得到了 &5&lX1 &b{0} &e!'
+command-give-item: '&d[&9RandomItem&d] &e你给予了玩家 &6{0} &5&lX{1} &b{2}&e!'
+command-drop-item: '&d[&9RandomItem&d] &e你让随机物品 &6{0} &5X{1} &e掉落在了世界 &a{2} &e: &b{3}&c,&b{4}&c,&b{5}'
+command-refresh-item: '&d[&bRandomItem&d] &e你将 &5&lX1 &b{0} &e刷新为了 &5&lX1 &b{2} &e! 已刷新变量: &9{1} &e指向数据: &d{2}'
+command-delete-item: '&d[&bRandomItem&d] &c你刪除了 &b{0} &e!'
+
+command-no-permission: '&d[&9RandomItem&d] &c你没有权限做这个!'
+
+command-only-player: '&d[&9RandomItem&d] &c此命令只能玩家使用!'
+
+command-valid-number: '&d[&9RandomItem&d] &c你输入的页数必须是数字!'
+command-valid-world: '&d[&9RandomItem&d] &c世界 &b{0} &c不存在!'
+command-valid-item: '&d[&9RandomItem&d] &c物品 &b{0} &c不存在!'
+command-valid-player: '&d[&9RandomItem&d] &c玩家 &b{0} &c不存在!'
+command-valid-item-in-hand: '&d[&9RandomItem&d] &c你必须手持一个物品!'
+command-valid-random-item-in-hand: '&d[&9RandomItem&d] &c你手持的不是一个RandomItem生成的物品!'
+command-valid-save: '&d[&9RandomItem&d] &c保存物品 &b{0} &c失败!'
+command-valid-id: '&d[&9RandomItem&d] &cID &b{0} &c不存在! 已跳过!'
+command-valid-type: '&d[&bRandomItem&d] &c变量类型 &b{0} &c不存在!'
+command-valid-network: '&d[&9RandomItem&d] 连接服务器失败! 请检查您的网络!'
+command-valid-command: '&d[&9RandomItem&d] &c你是不是输错啦喵!~'
+command-valid-slot: '&d[&9RandomItem&d] &c怪物 &d{0} &c身上没有叫 &6{1} &c的槽位!'
+command-id-exists: '&d[&9RandomItem&d] &c随机物品 &b{0} &c已存在!'
+
+call-valid-index: '&d[&9RandomItem&d] &c下标调用发生错误: {0}'
+
+command-reload: '&d[&9RandomItem&d] &e插件已重载!'
+
+command-info:
+  - '&d&l&m================================================'
+  - '&b/randomitem get [物品ID] (-amount 数量公式) (-probable 几率公式) (--same) (-data 指向数据)               '
+  - '  &6-> &e获取一个随机物品&e.'
+  - '&b/randomitem give [玩家ID] [物品ID] (-amount 数量公式) (-probable 几率公式) (--same) (-data 指向数据)     '
+  - '  &6-> &e给某玩家一个随机物品&e.'
+  - '&b/randomitem refresh (-vars 刷新的变量id) (-data 指向数据)     '
+  - '  &6-> &e刷新你手上的随机物品&e.'
+  - '&b/randomitem list (页数)                                  '
+  - '  &6-> &e列出随机物品列表.'
+  - '&b/randomitem save [物品ID] [文件路径]                     '
+  - '  &6-> &e存储你手上的物品&e.'
+  - '&b/randomitem drop [玩家ID] [物品ID] [世界名] [x] [y] [z] (-amount 数量公式) (-probable 几率公式) (--same) (-data 指向数据) '
+  - '  &6-> &e掉落随机物品.'
+  - '&b/randomitem reload                                     '
+  - '  &6-> &e重载插件&e.'
+  - '&d[]为必填项 , ()为可填项'
+  - '&d公式支持PAPI 四则运算,几率0~1对应1%~100%'
+  - '&d(指向数据) 的 格式: &a[变量ID=值,变量ID=值·····]'
+  - '&d&l&m================================================'
+
