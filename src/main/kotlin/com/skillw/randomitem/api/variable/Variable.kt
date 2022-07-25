@@ -1,6 +1,6 @@
 package com.skillw.randomitem.api.variable
 
-import com.skillw.pouvoir.api.able.Keyable
+import com.skillw.pouvoir.api.able.Registrable
 import com.skillw.randomitem.RandomItem
 import com.skillw.randomitem.RandomItem.variableTypeManager
 import com.skillw.randomitem.api.data.ProcessData
@@ -14,7 +14,7 @@ import taboolib.module.lang.sendLang
 /**
  * 变量
  */
-class Variable(override val key: String, val type: BaseVariableType, val cache: Boolean = true) : Keyable<String>,
+class Variable(override val key: String, val type: BaseVariableType, val cache: Boolean = true) : Registrable<String>,
     ConfigurationSerializable {
     /**
      * 变量数据

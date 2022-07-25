@@ -1,15 +1,17 @@
 package com.skillw.randomitem.api.data
 
 import com.skillw.pouvoir.Pouvoir
+import com.skillw.pouvoir.api.PouvoirAPI.placeholder
 import com.skillw.pouvoir.api.map.BaseMap
-import com.skillw.pouvoir.util.MessageUtils.wrong
-import com.skillw.pouvoir.util.StringUtils.placeholder
 import com.skillw.pouvoir.util.StringUtils.toArgs
 import com.skillw.randomitem.api.variable.VariableData
 import org.bukkit.entity.LivingEntity
+import org.bukkit.entity.Player
+import taboolib.common.platform.function.warning
 import taboolib.common.util.asList
 import taboolib.common5.Coerce
 import taboolib.module.chat.colored
+import taboolib.platform.compat.replacePlaceholder
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -28,7 +30,8 @@ class ProcessData(entity: LivingEntity? = null) : BaseMap<String, Any>() {
             val processData = ProcessData(entity)
             if (string.length <= 2) return processData
             try {
-                val array = string.let { it.substring(1, it.lastIndex) }.toArgs()
+                val array = string.run { if (entity != null) string.placeholder(entity) else string }
+                    .let { it.substring(1, it.lastIndex) }.toArgs()
                 for (single in array) {
                     if (single.isEmpty() || single.isBlank()) continue
                     val key = single.split("=")[0]
@@ -36,7 +39,7 @@ class ProcessData(entity: LivingEntity? = null) : BaseMap<String, Any>() {
                     processData[key] = if (entity != null) value.placeholder(entity) else value
                 }
             } catch (e: Exception) {
-                wrong("Wrong Point Data Format!")
+                warning("Wrong Point Data Format!")
             }
             return processData
         }
@@ -97,6 +100,9 @@ class ProcessData(entity: LivingEntity? = null) : BaseMap<String, Any>() {
             (this["variableData"] as? VariableData?) ?: return Pouvoir.pouPlaceHolderAPI.replace(entity, temp).colored()
         if (variableData.containsVariable(temp)) {
             temp = variableData.replace(temp, this)
+        }
+        if (entity is Player) {
+            temp = temp.replacePlaceholder(entity)
         }
         return Pouvoir.pouPlaceHolderAPI.replace(entity, temp).colored()
     }

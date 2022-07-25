@@ -1,7 +1,7 @@
 package com.skillw.randomitem.api.meta
 
 import com.skillw.pouvoir.Pouvoir
-import com.skillw.pouvoir.api.able.Keyable
+import com.skillw.pouvoir.api.able.Registrable
 import com.skillw.randomitem.RandomItem
 import com.skillw.randomitem.api.data.ProcessData
 import com.skillw.randomitem.util.FunctionUtils
@@ -74,7 +74,7 @@ class MetaMeta(
     }
 }
 
-interface BaseMeta<T> : Keyable<String>, Comparable<BaseMeta<*>>, ConfigurationSerializable {
+interface BaseMeta<T> : Registrable<String>, Comparable<BaseMeta<*>>, ConfigurationSerializable {
     val priority: Int
     val loadScript: String
     val buildScript: String

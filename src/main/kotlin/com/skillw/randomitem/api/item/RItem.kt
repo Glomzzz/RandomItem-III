@@ -1,14 +1,17 @@
 package com.skillw.randomitem.api.item
 
-import com.skillw.pouvoir.api.able.Keyable
-import com.skillw.pouvoir.util.CalculationUtils.result
-import com.skillw.pouvoir.util.CalculationUtils.resultDouble
-import com.skillw.pouvoir.util.FileUtils
+import com.skillw.pouvoir.api.able.Registrable
+import com.skillw.pouvoir.taboolib.module.nms.ItemTagData
+import com.skillw.pouvoir.util.CalculationUtils.calculate
+import com.skillw.pouvoir.util.CalculationUtils.calculateDouble
+import com.skillw.pouvoir.util.FileUtils.loadYaml
 import com.skillw.randomitem.RandomItem
 import com.skillw.randomitem.RandomItem.randomItemManager
 import com.skillw.randomitem.api.data.ProcessData
 import com.skillw.randomitem.api.meta.MetaData
 import com.skillw.randomitem.api.variable.VariableData
+import com.skillw.randomitem.util.mirrorFutureA
+import com.skillw.randomitem.util.mirrorNowA
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -17,11 +20,11 @@ import taboolib.common.platform.ProxyPlayer
 import taboolib.common.util.random
 import taboolib.common5.Coerce
 import taboolib.common5.Demand
-import taboolib.module.nms.ItemTagData
+import taboolib.common5.mirrorNow
 import taboolib.module.nms.getItemTag
 import taboolib.platform.util.giveItem
 
-class RItem(override val key: String, val metaData: MetaData, val variableData: VariableData) : Keyable<String>,
+class RItem(override val key: String, val metaData: MetaData, val variableData: VariableData) : Registrable<String>,
     ConfigurationSerializable {
     /**
      * 全局数据
@@ -43,7 +46,7 @@ class RItem(override val key: String, val metaData: MetaData, val variableData: 
         RandomItem.poolExecutor.execute {
             RandomItem.randomItemManager.remove(key)
             val file = randomItemManager.fileMap[this]
-            val config = FileUtils.loadConfigFile(file ?: return@execute) ?: return@execute
+            val config = file?.loadYaml() ?: return@execute
             config.set(key, null)
             config.save(file)
             randomItemManager.fileMap.remove(this)
@@ -112,7 +115,7 @@ class RItem(override val key: String, val metaData: MetaData, val variableData: 
         @JvmStatic
         fun createFromItem(key: String, itemStack: ItemStack): RItem {
             val tag = itemStack.getItemTag()
-            val rItem = RandomItem.poolExecutor.submit<RItem> {
+            val rItem = mirrorFutureA<RItem>("create-form-item") {
                 RItem(
                     key,
                     MetaData.loadFromItem(itemStack),
@@ -142,25 +145,25 @@ class RItem(override val key: String, val metaData: MetaData, val variableData: 
             demandStr: String,
             livingEntity: LivingEntity?
         ): Pair<List<ItemStack>, Boolean> {
-            return RandomItem.poolExecutor.submit<Pair<List<ItemStack>, Boolean>> {
+            return mirrorNowA("product-with-pointing-data") {
                 val demand = Demand("dem $demandStr")
                 val amountFormula = demand.get("amount", "1")!!
                 val probableFormula = demand.get("probable", "1")!!
                 val data = demand.get("data", "[]")!!
                 val isSame = demand.tags.contains("same")
-                val temp = Coerce.toInteger(amountFormula.result(livingEntity))
+                val temp = Coerce.toInteger(amountFormula.calculate(livingEntity))
                 val amount = if (temp == 0) 1 else temp
-                val probable = probableFormula.resultDouble(livingEntity)
+                val probable = probableFormula.calculateDouble(livingEntity)
                 if (!random(probable)) {
-                    return@submit Pair(emptyList(), false)
+                    return@mirrorNowA Pair(emptyList(), false)
                 }
                 val processData = ProcessData.pointData(livingEntity, data)
                 if (isSame) {
                     val item = rItem.product(livingEntity, processData)
-                    return@submit Pair(Array(amount) { item }.asList(), true)
+                    return@mirrorNowA Pair(Array(amount) { item }.asList(), true)
                 }
-                return@submit Pair(Array(amount) { rItem.product(livingEntity, processData) }.asList(), false)
-            }.get()
+                Pair(Array(amount) { rItem.product(livingEntity, processData) }.asList(), false)
+            }
         }
     }
 
@@ -170,7 +173,7 @@ class RItem(override val key: String, val metaData: MetaData, val variableData: 
      * @return
      */
     fun product(): ItemStack {
-        return RandomItem.poolExecutor.submit<ItemStack> { metaData.product(ProcessData()) }.get()
+        return mirrorNow("product-item-without-entity") { metaData.product(ProcessData()) }
     }
 
     /**
@@ -185,7 +188,7 @@ class RItem(override val key: String, val metaData: MetaData, val variableData: 
     fun product(entity: LivingEntity?, processData: ProcessData = ProcessData(entity)): ItemStack {
         processData["variableData"] = variableData
         processData["random-item-key"] = key
-        return RandomItem.poolExecutor.submit<ItemStack> { metaData.product(processData) }.get()
+        return mirrorNow("product-item-with-entity") { metaData.product(processData) }
     }
 
     /**

@@ -26,6 +26,7 @@ import taboolib.common.platform.function.submit
 import taboolib.common.util.sync
 import taboolib.common5.Coerce
 import taboolib.common5.Demand
+import taboolib.common5.Mirror
 import taboolib.module.chat.TellrawJson
 import taboolib.module.chat.colored
 import taboolib.module.lang.sendLang
@@ -67,6 +68,21 @@ object RICommand {
             sender.sendLang("command-info")
         }
 
+    }
+
+    @CommandBody
+    val report = subCommand {
+        execute<ProxyCommandSender> { sender, _, _ ->
+            Mirror.report(sender)
+        }
+    }
+
+    @CommandBody
+    val clear = subCommand {
+        execute<ProxyCommandSender> { sender, _, _ ->
+            sender.sendLang("command-clear")
+            Mirror.mirrorData.clear()
+        }
     }
 
     private fun handleAndGive(
@@ -333,7 +349,7 @@ object RICommand {
                     val rightSymbol = getConfigList("right")
                     val down = getConfigList("down")
 
-                    sync { sender.sendMessage(up) }
+                    submit { sender.sendMessage(up) }
                     var raw: TellrawJson
                     val beginIndex = (page - 1) * size
                     val lastIndex = if (page != lastPage) {
@@ -375,7 +391,7 @@ object RICommand {
                     val pageInfo =
                         getConfigList("page-info").replacement(mapOf("{current}" to "$page", "{total}" to "$lastPage"))
 
-                    sync {
+                    submit {
                         raw.append(left)
                             .append(pageInfo)
                             .append(right)

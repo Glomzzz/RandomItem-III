@@ -10,6 +10,8 @@ ExampleItem:
   #物品描述 支持调用节点
   lore:
     - '<test-map>(描述)'
+    - '<品质1>()'
+    - 'if(<品质1>(),==,<品质2>(),<品质>(),<品质2>())'
   #0 = false , 非0 = true
   unbreakable: true
   item-flags:
@@ -18,7 +20,7 @@ ExampleItem:
   #例子:
   #nbt-keys:
   #  RPG_SYSTEM_ATTRIBUTE_Physical_Damage_Value: '<强度>*10'
-  nbt: { }
+  nbt-keys: { }
   #物品附魔节点 支持值调用节点
   #例子:
   #enchantments:
@@ -26,7 +28,16 @@ ExampleItem:
   enchantments:
     SWEEPING_EDGE: 1
   vars:
+    品质1:
+      type: strings
+      values:
+        - '<品质>()'
+    品质2:
+      type: strings
+      values:
+        - '<品质>()'
     品质:
+      cache: false
       type: weight
       values:
         - '10::粗糙'
@@ -46,5 +57,6 @@ ExampleItem:
         - '啊吧'
       传说:
         - '啊吧2'
+
   global-vars: [ ]
 

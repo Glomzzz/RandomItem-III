@@ -26,7 +26,7 @@ command-valid-slot: '&d[&9RandomItem&d] &cThe mob &d{1} &c has no such Equipment
 command-id-exists: '&d[&9RandomItem&d] &cThe random item called &b{0} &chas already exists!'
 
 call-valid-index: '&d[&9RandomItem&d] &cSomething wrong happened while index calling! Cause: {0}'
-
+command-clear: '&d[&bRandomItem&d] &aMirrorData has been cleared!'
 command-reload: '&d[&bRandomItem&d] &eReloaded successfully!'
 command-info:
   - '&d&l&m================================================'

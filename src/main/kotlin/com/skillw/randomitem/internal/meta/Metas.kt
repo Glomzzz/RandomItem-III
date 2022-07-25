@@ -3,7 +3,6 @@ package com.skillw.randomitem.internal.meta
 import com.google.common.base.Enums
 import com.skillw.pouvoir.api.script.ScriptTool
 import com.skillw.pouvoir.util.ColorUtils.decolored
-import com.skillw.pouvoir.util.MessageUtils.wrong
 import com.skillw.randomitem.RandomItem
 import com.skillw.randomitem.api.meta.BuilderMeta
 import com.skillw.randomitem.api.meta.MetaMeta
@@ -17,6 +16,7 @@ import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.meta.Damageable
 import org.bukkit.inventory.meta.LeatherArmorMeta
+import taboolib.common.platform.function.warning
 import taboolib.common.util.asList
 import taboolib.common5.Coerce
 import taboolib.library.xseries.XEnchantment
@@ -169,7 +169,9 @@ val nbtMeta by lazy {
         }) {
         val data = it.first
         val tag = it.second
+        println(data["nbt-keys-context"].toString())
         val context = data["nbt-keys-context"] as? Map<*, *>? ?: return@TagMeta tag
+        println(context.toString())
         tag.putAll(data.handle(context).toNBT()?.asCompound() ?: return@TagMeta tag)
         return@TagMeta tag
     }
@@ -256,10 +258,10 @@ val enchantmentMeta by lazy {
         }) {
             val optional = XEnchantment.matchXEnchantment(entry.key.toString())
             if (!optional.isPresent) {
-                wrong("Unknown Enchantment ${entry.key}")
+                warning("Unknown Enchantment ${entry.key}")
                 continue
             }
-            val enchantment = optional.get().parseEnchantment() ?: continue
+            val enchantment = optional.get().enchant ?: continue
             val level = Coerce.toInteger(data.handle(entry.value!!))
             if (level > 0)
                 builder.enchants[enchantment] = level
@@ -339,7 +341,7 @@ val colorMeta by lazy {
         val green = Coerce.asInteger(splits[1])
         val blue = Coerce.asInteger(splits[2])
         if (!red.isPresent || !green.isPresent || !blue.isPresent) {
-            wrong("The RGB must be Number,Number,Number !")
+            warning("The RGB must be Integer,Integer,Integer !")
             return@BuilderMeta null
         }
         builder.color = Color.fromRGB(red.get(), green.get(), blue.get())

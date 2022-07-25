@@ -1,6 +1,6 @@
 package com.skillw.randomitem.api.variable.type
 
-import com.skillw.pouvoir.api.able.Keyable
+import com.skillw.pouvoir.api.able.Registrable
 import com.skillw.randomitem.RandomItem.variableTypeManager
 import com.skillw.randomitem.api.data.ProcessData
 import java.util.function.Function
@@ -9,7 +9,7 @@ import java.util.function.Function
  * @author Glom_
  */
 abstract class BaseVariableType(override val key: String, val cache: Boolean = true) :
-    Keyable<String> {
+    Registrable<String> {
     protected var function: Function<Pair<ProcessData, String>, Any> = Function { }
 
     constructor(key: String, function: Function<Pair<ProcessData, String>, Any>, cache: Boolean = true) : this(
